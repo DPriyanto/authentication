@@ -14,27 +14,17 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Dumping structure for table php_authentication.api_keys
-CREATE TABLE IF NOT EXISTS `api_keys` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `created_at` datetime DEFAULT NULL,
-  `modified_at` datetime DEFAULT NULL,
-  `user_id` int DEFAULT NULL,
-  `public` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `private` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
-
--- Data exporting was unselected.
-
 -- Dumping structure for table php_authentication.merchants
 CREATE TABLE IF NOT EXISTS `merchants` (
   `id` int NOT NULL AUTO_INCREMENT,
   `created_at` datetime DEFAULT NULL,
   `modified_at` datetime DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+  `public_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `private_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `public_key` (`public_key`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 -- Data exporting was unselected.
 
