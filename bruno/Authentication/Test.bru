@@ -1,0 +1,95 @@
+meta {
+  name: Test
+  type: http
+  seq: 1
+}
+
+post {
+  url: https://authentication.php.dev/test.php
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: eae4edb08be6bc3d0ce2dd464251eca3939d463aef8bbf710d6111be2281dc02
+}
+
+body:json {
+  {
+    "firstName": "John",
+    "lastName": "Smith",
+    "isAlive": true,
+    "age": 25,
+    "address": {
+      "streetAddress": "21 2nd Street",
+      "city": "New York",
+      "state": "NY",
+      "postalCode": "10021-3100"
+    },
+    "phoneNumbers": [
+      {
+        "type": "home",
+        "number": "212 555-1234"
+      },
+      {
+        "type": "office",
+        "number": "646 555-4567"
+      }
+    ],
+    "spouse": null
+  }
+}
+
+body:text {
+  {
+    "firstName": "John",
+    "lastName": "Smith",
+    "isAlive": true,
+    "age": 25,
+    "address": {
+      "streetAddress": "21 2nd Street",
+      "city": "New York",
+      "state": "NY",
+      "postalCode": "10021-3100"
+    },
+    "phoneNumbers": [
+      {
+        "type": "home",
+        "number": "212 555-1234"
+      },
+      {
+        "type": "office",
+        "number": "646 555-4567"
+      }
+    ],
+    "spouse": null
+  }
+}
+
+script:pre-request {
+  const crypto = require('crypto');
+  
+  // Get the request body
+  const bodyObject = req.getBody();
+  const privateKey = 'abc143b70e4017530e7a9f5c9b6c7f80421af7a1041024d92b2246ca906281ea';
+  
+  // Convert to JSON string with consistent formatting (no spaces)
+  const bodyString = JSON.stringify(bodyObject);
+  
+  // Sign the body
+  const signature = crypto.createHmac('sha256', privateKey)
+      .update(bodyString)
+      .digest('base64');
+  
+  // Set the signature as a header
+  req.setHeader('x-signature', signature);
+  
+  // Optional: Log for debugging
+  console.log('Body string being signed:', bodyString);
+  console.log('Generated signature:', signature);
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
